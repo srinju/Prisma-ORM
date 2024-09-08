@@ -77,4 +77,51 @@ async function getUsers(id : number) {
     console.log("the user is " , rresult);
 }
 
-getUsers(2);
+//getUsers(2);
+
+//create todo >>
+
+async function createTodo(userId : number , title : string , description : string) {
+    const response = await prisma.todo.create({
+        data : {
+            userId,
+            title,
+            description
+        }
+    });
+    console.log(response);
+}   
+
+//get todo given an user id >>
+
+async function getTodo(userId : number) {
+    const response = await prisma.todo.findMany({
+        where : {
+            userId : userId
+        }
+    });
+    console.log(response);
+}
+
+//createTodo(2,'go to gym' , 'go to gym from 7 am to 9 am');
+//getTodo(2);
+
+//get todos and user details with user id as the input >>
+
+async function getUserAndTodoDetails(userId : number) {
+    const response = await prisma.todo.findMany({
+        where : {
+            userId : userId
+        },
+        select : {
+            id : true,
+            title : true,
+            description : true,
+            user : true //we can get all the user details too by diing this command 
+        }
+    });
+    console.log(response);
+}
+
+getUserAndTodoDetails(2);
+
